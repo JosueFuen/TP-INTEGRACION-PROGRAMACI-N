@@ -34,8 +34,16 @@ def menu():
 # seleccionar nombre o continente.
 def lista_territorio (territorio):
     lista=[]
+    #Tuvimos que agregar este if, debido a que en el catalogo, el encabezado se llama nombre. 
+    #La otra solucion era cambiar el encabezado por 'pais', asi quedaba todo mas fluido y sin 
+    # complicaciones, pero la consigna indica que se llame 'nombre'
+    if territorio=='pais':
+        clave='nombre'
+    else:
+        clave='continente'
+
     for pais in DATOS_PAISES:
-        lista.append(pais[f'{territorio}'].lower())
+        lista.append(pais[f'{clave}'].lower())
     return lista
 
 #Valida que el pais no exista o que no se ingrese nada
@@ -55,7 +63,7 @@ def validacion_pais():
 #Valida los digitos de poblacion o superficie a eleccion
 def validacion_digitos(tipo):
     print('='*60)
-    cantidad=input(f"Ingrese {tipo} del país: ").strip()
+    cantidad=input(f"Ingrese la {tipo} del país: ").strip()
     while True:
         if not cantidad.isdigit() or cantidad =='':
             cantidad=input("====== ERROR ======\nDebe ingresa un digito. Intente nuevamente: ").strip()
@@ -74,7 +82,7 @@ def validacion_continente():
     print('4) Europa')
     print('5) Oceanía')
     while True:
-        option=input('Indique a qué continente corresponde el pais elegido: ').strip()
+        option=input('Indique el continente: ').strip()
         match option:
             case '1':
                 nombre_continente='África'
@@ -96,6 +104,8 @@ def validacion_continente():
                 continue
     return nombre_continente
 
+#Compara que el pais indicado se encuentre dentro de la lista de paises. Ademas chequea 
+# que el pais exista y que no este vacio
 def buscar_pais():
     nombre_pais=input('Ingrese el nombre del país: ').strip()
     lista_paises=lista_territorio('pais')
@@ -108,6 +118,43 @@ def buscar_pais():
             continue
         break
     return nombre_pais
+
+#filtra los paises por continente seleccionado
+def filtro_continente():
+    nombre_continente=validacion_continente()
+    paises_filtrados=[]
+    for datos_pais in DATOS_PAISES:
+        if nombre_continente==datos_pais['continente']:
+            paises_filtrados.append(datos_pais)
+    print(paises_filtrados)
+    return paises_filtrados
+
+#Es una validación de que el numero ingresado es un digito. Es casi la misma funcion que la validacion_digito, 
+# pero esta no tiene ningun input
+def validacion_rango_digito(rango):
+    while True:
+        if not rango.isdigit() or rango =='':
+            rango=input("====== ERROR ======\nDebe ingresa un digito. Intente nuevamente: ").strip()
+            continue
+        rango=int(rango)
+        if rango<1:
+            rango=input(f"====== ERROR ======\nDebe ingresar un digito mayor a cero. Intente nuevamente: ").strip()
+            continue
+        return rango
+
+def filtro_rangos(tipo):
+    rango_superior=input('Ingrese el rango superior para el filtro: ').strip()
+    rango_superior=validacion_rango_digito(rango_superior)
+    rango_inferior=input('Ingrese el rango inferior para el filtro: ').strip()
+    rango_inferior=validacion_rango_digito(rango_inferior)
+
+    paises_filtrados=[]
+    for datos_pais in DATOS_PAISES:
+        if datos_pais[tipo]<=rango_superior and datos_pais[tipo]>=rango_inferior:
+            paises_filtrados.append(datos_pais)
+    print (paises_filtrados)
+    return paises_filtrados
+
 
 
 #función principal para agregar un nuevo país.
@@ -141,6 +188,48 @@ def actualizar_datos():
         escritor=csv.DictWriter(archivo, fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writeheader()
         escritor.writerows(DATOS_PAISES)
+#Busca el pais por palabra ingresada 
+def buscar_pais():
+    nombre_pais=input('Ingresar nombre de pais: ').strip()
+    while True:
+        if nombre_pais=='':
+            nombre_pais=input('Debe ingresar una palabra clave. Intente nuevamente: ').strip()
+            continue
+        break
+    paises_filtrados=[]
+    for fila in DATOS_PAISES:
+        if nombre_pais.lower() in fila['nombre'].lower():
+            paises_filtrados.append(fila)
+    print(paises_filtrados)
+    pausa=input('Presione enter para continuar: ')
+    
+def filtrar_pais():
+    print('Filtrar paises por: ')
+    print('1) Continente')
+    print('2) Rango de población')
+    print('3) Rango de superficie')
+    print('4) Volver atras')    
+    option=''
+    while option!='4':
+        option=input('Ingrese la opción deseada:')
+        match option:
+            case '1':
+                filtro_continente()
+                break
+            case '2':
+                filtro_rangos('poblacion')
+                break
+            case '3':
+                filtro_rangos('superficie')
+                break
+            case '4':
+                break
+            case _:
+                pausa=input('Opción incorrecta. Intente nuevamente.')
+                continue
+
+
+
 
 
 while opcion != '7':
@@ -152,9 +241,9 @@ while opcion != '7':
         case '2':
             actualizar_datos()
         case '3':
-            continue
+            buscar_pais()
         case '4':
-            continue
+            filtrar_pais()
         case '5':
             continue
         case '6':
