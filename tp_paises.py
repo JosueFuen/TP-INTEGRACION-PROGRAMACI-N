@@ -232,30 +232,27 @@ def filtrar_pais():
 # ------------------------------------------------------------
 # Ordenar paises
 #funcion principal para ordenar los paises por nombre, poblacion o superficie
+
 def ordenar_paises():
-    print('Ordenar paises por: ')
-    print('1) Nombre')
-    print('2) Poblacion')
-    print('3) Superficie')
-    print('4) Volver atras')
-    option=''
-    while option!='4':
-        option=input('Ingrese la opción deseada:')
+    while True:
+        print('')
+        print('Ordenar paises por: ')
+        print('1) Nombre')
+        print('2) Poblacion')
+        print('3) Superficie')
+        print('4) Volver atras')
+        option=input('Ingrese la opción deseada:').strip()
         match option:
             case '1':
                 ordenar_por_nombre()
-                break
             case '2':
                 ordenar_por_poblacion()
-                break
             case '3':
                 ordenar_por_superficie()
-                break
             case '4':
                 break
             case _:
-                pausa=input('Opción incorrecta. Intente nuevamente.')
-                continue
+                print('Opción incorrecta. Intente nuevamente.')
 
 # Funcion generica de ordenamiento burbuja (Bubble Sort)
 # Recibe la lista de paises, el campo por el cual ordenar, y si es ascendente o descendente
@@ -331,9 +328,7 @@ def mostrar_paises_formateados(paises):
 
 # Funcion para ordenar por nombre
 def ordenar_por_nombre():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Ordenar paises por nombre:')
@@ -351,9 +346,7 @@ def ordenar_por_nombre():
 
 # Funcion para ordenar por poblacion
 def ordenar_por_poblacion():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Ordenar paises por poblacion:')
@@ -371,9 +364,7 @@ def ordenar_por_poblacion():
 
 # Funcion para ordenar por superficie
 def ordenar_por_superficie():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Orden:')
@@ -402,9 +393,7 @@ def mayor_menor_poblacion():
     - DATOS_PAISES: lista de diccionarios con datos de paises
     """
     # validar si hay paises para mostrar
-    if not DATOS_PAISES:
-        print("No hay paises para mostrar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     # inicializar variables
@@ -560,25 +549,41 @@ def tiene_paises():
 # Fin validaciones
 # ------------------------------------------------------------
 
+# menu principal
+def menu_principal():
+    while True:
+        print('')
+        print('MENU PRINCIPAL: ')
+        print('')
+        print('1) Agregar pais')
+        print('2) Actualizar datos')
+        print('3) Buscar pais')
+        print('4) Filtrar paises')
+        print('5) Ordenar paises')
+        print('6) Mostrar estadisticas')
+        print('7) Salir')
+        opcion=input('Seleccione una opcion: ').strip()
+        match opcion:
+            case '1':
+                agregar_pais()
+            case '2':
+                actualizar_datos()
+            case '3':
+                buscar_pais()
+            case '4':
+                filtrar_pais()
+            case '5':
+                ordenar_paises()
+            case '6':
+                mostrar_estadisticas()
+            case '7':
+                print('Hasta luego!')
+                break
+            case _:
+                print('Opción incorrecta. Intente nuevamente.')
 
-while opcion != '7':
-    menu()
-    opcion=input('Seleccione una opcion: ').strip()
-    match opcion:
-        case '1':
-            agregar_pais()
-        case '2':
-            actualizar_datos()
-        case '3':
-            buscar_pais()
-        case '4':
-            filtrar_pais()
-        case '5':
-            ordenar_paises()
-        case '6':
-            mostrar_estadisticas()
-        case '7':
-            print('Hasta luego!')
-            break
-        case _:
-            pausa=input('Opción incorrecta. Intente nuevamente.')
+# fin menu principal
+# ------------------------------------------------------------
+
+# menu principal
+menu_principal()
