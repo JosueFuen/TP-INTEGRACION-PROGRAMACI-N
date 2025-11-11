@@ -213,8 +213,12 @@ def buscar_pais_palabra():
     for fila in DATOS_PAISES:
         if nombre_pais.lower() in fila['nombre'].lower():
             paises_filtrados.append(fila)
-    print(paises_filtrados)
-    pausa=input('Presione enter para continuar: ')
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
+    return paises_filtrados
+
 
 def filtrar_pais():
     print('')
@@ -582,7 +586,7 @@ def menu_principal():
             case '2':
                 actualizar_datos()
             case '3':
-                buscar_pais()
+                buscar_pais_palabra()
             case '4':
                 filtrar_pais()
             case '5':
