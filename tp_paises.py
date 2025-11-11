@@ -1,16 +1,16 @@
 import csv
 import os
-nombre_archivo='Country-data.csv'
+NOMBRE_ARCHIVO='country_data.csv'
 opcion=''
 #Argentina,45376763,2780400,América
-if not os.path.exists('Country-data.csv'):
-    with open (nombre_archivo, 'w', newline='', encoding='utf-8') as archivo:
+if not os.path.exists(NOMBRE_ARCHIVO):
+    with open (NOMBRE_ARCHIVO, 'w', newline='', encoding='utf-8') as archivo:
         escritor=csv.DictWriter(archivo, fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writeheader()
 #Crea una lista de diccionarios con la informacion de los paises
 def catalogo_paises():
     paises=[]
-    with open (nombre_archivo, newline='', encoding='utf-8' ) as archivo:
+    with open (NOMBRE_ARCHIVO, newline='', encoding='utf-8' ) as archivo:
         lector=csv.DictReader(archivo)
         for fila in lector:
             paises.append({'nombre':fila['nombre'], 'poblacion':int(fila['poblacion']),'superficie':int (fila['superficie']),'continente':fila['continente']})
@@ -182,7 +182,7 @@ def agregar_pais():
     nombre_continente=validacion_continente()
     nuevo_pais={'nombre':nombre_pais,'poblacion':poblacion,'superficie':superficie,'continente':nombre_continente}
 
-    with open (nombre_archivo, 'a', newline='', encoding='utf-8') as archivo:
+    with open (NOMBRE_ARCHIVO, 'a', newline='', encoding='utf-8') as archivo:
         escritor=csv.DictWriter(archivo,fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writerow(nuevo_pais)
     DATOS_PAISES.append(nuevo_pais)
@@ -201,7 +201,7 @@ def actualizar_datos():
             datos_pais['poblacion']=poblacion
             datos_pais['superficie']=superficie
             break
-    with open (nombre_archivo, 'w', newline='', encoding='utf-8') as archivo:
+    with open (NOMBRE_ARCHIVO, 'w', newline='', encoding='utf-8') as archivo:
         escritor=csv.DictWriter(archivo, fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writeheader()
         escritor.writerows(DATOS_PAISES)
@@ -219,13 +219,13 @@ def buscar_pais_palabra():
             paises_filtrados.append(fila)
     print(paises_filtrados)
     pausa=input('Presione enter para continuar: ')
-    
+
 def filtrar_pais():
     print('Filtrar paises por: ')
     print('1) Continente')
     print('2) Rango de población')
     print('3) Rango de superficie')
-    print('4) Volver atras')    
+    print('4) Volver atras')
     option=''
     while option!='4':
         option=input('Ingrese la opción deseada:')
@@ -245,27 +245,168 @@ def filtrar_pais():
                 pausa=input('Opción incorrecta. Intente nuevamente.')
                 continue
 
-def ordenar_pais():
+# ------------------------------------------------------------
+# Ordenar paises
+#funcion principal para ordenar los paises por nombre, poblacion o superficie
+def ordenar_paises():
     print('Ordenar paises por: ')
     print('1) Nombre')
-    print('2) Población')
+    print('2) Poblacion')
     print('3) Superficie')
-    print('4) Volver atras')    
+    print('4) Volver atras')
     option=''
     while option!='4':
         option=input('Ingrese la opción deseada:')
         match option:
             case '1':
+                ordenar_por_nombre()
                 break
             case '2':
+                ordenar_por_poblacion()
                 break
             case '3':
+                ordenar_por_superficie()
                 break
             case '4':
                 break
             case _:
                 pausa=input('Opción incorrecta. Intente nuevamente.')
                 continue
+
+# Funcion generica de ordenamiento burbuja (Bubble Sort)
+# Recibe la lista de paises, el campo por el cual ordenar, y si es ascendente o descendente
+def bubble_sort_paises(paises, campo, ascendente=True):
+    """
+    Ordena una lista de paises usando el algoritmo Bubble Sort.
+
+    Parametros:
+    - paises: lista de diccionarios con datos de paises
+    - campo: 'nombre', 'poblacion' o 'superficie'
+    - ascendente: True para orden ascendente, False para descendente
+
+    Retorna: lista ordenada (no modifica la lista original)
+    """
+    # Hacemos una copia para no modificar la lista original
+    paises_ordenados = paises.copy()
+    n = len(paises_ordenados)
+
+    # Si hay menos de 2 elementos, ya esta ordenado
+    if n < 2:
+        return paises_ordenados
+
+    # Algoritmo Bubble Sort
+    for i in range(n - 1):
+        # Bandera para optimizar: si no hay intercambios, la lista ya esta ordenada
+        intercambio_realizado = False
+
+        for j in range(n - 1 - i):
+            # Obtenemos los valores a comparar
+            if campo == 'nombre':
+                valor_actual = paises_ordenados[j][campo].lower()
+                valor_siguiente = paises_ordenados[j + 1][campo].lower()
+            else:
+                valor_actual = paises_ordenados[j][campo]
+                valor_siguiente = paises_ordenados[j + 1][campo]
+
+            # Comparacion segun el orden deseado
+            if ascendente:
+                # Orden ascendente: si el actual es mayor que el siguiente, intercambiar
+                debe_intercambiar = valor_actual > valor_siguiente
+            else:
+                # Orden descendente: si el actual es menor que el siguiente, intercambiar
+                debe_intercambiar = valor_actual < valor_siguiente
+
+            if debe_intercambiar:
+                # Intercambiar los elementos
+                paises_ordenados[j], paises_ordenados[j + 1] = paises_ordenados[j + 1], paises_ordenados[j]
+                intercambio_realizado = True
+
+        # Si no hubo intercambios en esta pasada, la lista ya esta ordenada
+        if not intercambio_realizado:
+            break
+
+    return paises_ordenados
+
+# Funcion para mostrar paises formateados
+def mostrar_paises_formateados(paises):
+    """
+    Muestra la lista de paises en formato de tabla
+    Parametros:
+    - paises: lista de diccionarios con datos de paises
+    """
+    if not paises:
+        print("No hay paises para mostrar.")
+        return
+
+    print('\n' + '--'*50)
+    print(f"{'Nombre':<20} | {'Poblacion':>15} | {'Superficie':>18} | {'Continente':<15}")
+    print('--'*50)
+    for pais in paises:
+        print(f"{pais['nombre']:<20} | {pais['poblacion']:>15,} | {pais['superficie']:>15,} km | {pais['continente']:<15}")
+    print('--'*50)
+
+# Funcion para ordenar por nombre
+def ordenar_por_nombre():
+    if not DATOS_PAISES:
+        print("No hay paises para ordenar.")
+        input('Presione enter para continuar: ')
+        return
+
+    print('Ordenar paises por nombre:')
+    print('1) Ascendente (A-Z)')
+    print('2) Descendente (Z-A)')
+    opcion_orden = input('Seleccione el orden: ').strip()
+
+    ascendente = (opcion_orden == '1')
+
+    paises_ordenados = bubble_sort_paises(DATOS_PAISES, 'nombre', ascendente)
+
+    print(f'Paises ordenados por nombre ({("ascendente" if ascendente else "descendente")}):')
+    mostrar_paises_formateados(paises_ordenados)
+    input('Presione enter para continuar: ')
+
+# Funcion para ordenar por poblacion
+def ordenar_por_poblacion():
+    if not DATOS_PAISES:
+        print("No hay paises para ordenar.")
+        input('Presione enter para continuar: ')
+        return
+
+    print('Ordenar paises por poblacion:')
+    print('1) Ascendente (menor a mayor)')
+    print('2) Descendente (mayor a menor)')
+    opcion_orden = input('Seleccione el orden: ').strip()
+
+    ascendente = (opcion_orden == '1')
+
+    paises_ordenados = bubble_sort_paises(DATOS_PAISES, 'poblacion', ascendente)
+
+    print(f'Paises ordenados por poblacion ({("ascendente" if ascendente else "descendente")}):')
+    mostrar_paises_formateados(paises_ordenados)
+    input('Presione enter para continuar: ')
+
+# Funcion para ordenar por superficie
+def ordenar_por_superficie():
+    if not DATOS_PAISES:
+        print("No hay paises para ordenar.")
+        input('Presione enter para continuar: ')
+        return
+
+    print('Orden:')
+    print('1) Ascendente (menor a mayor)')
+    print('2) Descendente (mayor a menor)')
+    opcion_orden = input('Seleccione el orden: ').strip()
+
+    ascendente = (opcion_orden == '1')
+
+    paises_ordenados = bubble_sort_paises(DATOS_PAISES, 'superficie', ascendente)
+
+    print(f'Paises ordenados por superficie ({("ascendente" if ascendente else "descendente")}):')
+    mostrar_paises_formateados(paises_ordenados)
+    input('Presione enter para continuar: ')
+
+# Fin ordenar paises
+# ------------------------------------------------------------
 
 def mostrar_estadisticas():
     print('ESTADÍSTICAS: ')
@@ -306,7 +447,7 @@ while opcion != '7':
         case '4':
             filtrar_pais()
         case '5':
-            ordenar_pais()
+            ordenar_paises()
         case '6':
             mostrar_estadisticas()
         case '7':
