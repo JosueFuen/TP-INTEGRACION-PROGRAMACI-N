@@ -156,23 +156,7 @@ def filtro_rangos(tipo):
     return paises_filtrados
 
 
-def mayor_menor_poblacion():
-    mayor_poblacion=
-    menor_poblacion=
-    valor_menor=0
-    valor_mayor=
-    for datos_pais in DATOS_PAISES:
-        if datos_pais['poblacion'] > valor_menor:
-            valor_menor=datos_pais['poblacion']
-            mayor_poblacion.append(datos_pais)
-        elif datos_pais['poblacion'] <valor_mayor:
-            valor_mayor=datos_pais['poblacion']
-            menor_poblacion.append(datos_pais)
-    print ('País con mayor poblacion: ')
-    print (mayor_poblacion)
-    print ('='*60)
-    print ('Pais con menor poblacion: ')
-    print (menor_poblacion)
+
 
 #función principal para agregar un nuevo país.
 def agregar_pais():
@@ -408,13 +392,66 @@ def ordenar_por_superficie():
 # Fin ordenar paises
 # ------------------------------------------------------------
 
+# ------------------------------------------------------------
+# Mostrar estadisticas
+#funcion principal para mostrar el pais con mayor y menor poblacion
+def mayor_menor_poblacion():
+    """
+    Muestra el pais con mayor y menor poblacion
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not DATOS_PAISES:
+        print("No hay paises para mostrar.")
+        input('Presione enter para continuar: ')
+        return
+
+    # inicializar variables
+    mayor_poblacion= DATOS_PAISES[0]
+    menor_poblacion= DATOS_PAISES[0]
+
+    # recorrer la lista de paises para encontrar el pais con mayor y menor poblacion
+    for datos_pais in DATOS_PAISES:
+        # si encontramos un pais con mayor poblacion, actualizamos la variable
+        if datos_pais['poblacion'] > mayor_poblacion['poblacion']:
+            mayor_poblacion=datos_pais
+
+        # si encontramos un pais con menor poblacion, actualizamos la variable
+        if datos_pais['poblacion'] < menor_poblacion['poblacion']:
+            menor_poblacion=datos_pais
+
+    # mostrar los paises con mayor y menor poblacion
+    print('')
+    print ('--'*50)
+    print ('Paises con mayor y menor poblacion: ')
+    print ('--'*50)
+    print ('Pais con mayor poblacion:')
+    print (f'Nombre: {mayor_poblacion['nombre']}')
+    print (f'Poblacion: {mayor_poblacion['poblacion']}')
+    print (f'Superficie: {mayor_poblacion['superficie']} km')
+    print (f'Continente: {mayor_poblacion['continente']}')
+    print ('--'*50)
+    print ('Pais con menor poblacion:')
+    print (f'Nombre: {menor_poblacion['nombre']}')
+    print (f'Poblacion: {menor_poblacion['poblacion']}')
+    print (f'Superficie: {menor_poblacion['superficie']} km')
+    print (f'Continente: {menor_poblacion['continente']}')
+    print ('--'*50)
+    print('')
+    input('Presione enter para continuar: ')
+    return
+
+# Fin mostrar estadisticas
+# ------------------------------------------------------------
+
 def mostrar_estadisticas():
     print('ESTADÍSTICAS: ')
     print('1) País con mayor y menor población')
     print('2) Promedio de población')
     print('3) Promedio de superficie')
     print('4) Cantidad de paises por continente')
-    print('5) Salir')    
+    print('5) Salir')
     option=''
     while option!='5':
         option=input('Ingrese la opción deseada:')
