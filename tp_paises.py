@@ -75,7 +75,9 @@ def validacion_digitos(tipo):
         return cantidad
 #Te hace elegir entre las opciones de continente, para que no haya ningun error
 def validacion_continente():
+    print('')
     print('-----CONTINENTE PARA ELEGIR-----')
+    print('')
     print('1) África')
     print('2) América')
     print('3) Asia')
@@ -117,6 +119,9 @@ def buscar_pais():
             nombre_pais=input('Debe ingresar un nombre. Intente nuevamente: ')
             continue
         break
+    print('')
+    print(f'Pais encontrado correctamente: {nombre_pais}')
+    print('')
     return nombre_pais
 
 #filtra los paises por continente seleccionado
@@ -126,7 +131,10 @@ def filtro_continente():
     for datos_pais in DATOS_PAISES:
         if nombre_continente==datos_pais['continente']:
             paises_filtrados.append(datos_pais)
-    print(paises_filtrados)
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
     return paises_filtrados
 
 #Es una validación de que el numero ingresado es un digito. Es casi la misma funcion que la validacion_digito, 
@@ -152,10 +160,11 @@ def filtro_rangos(tipo):
     for datos_pais in DATOS_PAISES:
         if datos_pais[tipo]<=rango_superior and datos_pais[tipo]>=rango_inferior:
             paises_filtrados.append(datos_pais)
-    print (paises_filtrados)
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
     return paises_filtrados
-
-
 
 
 #función principal para agregar un nuevo país.
@@ -170,6 +179,9 @@ def agregar_pais():
         escritor=csv.DictWriter(archivo,fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writerow(nuevo_pais)
     DATOS_PAISES.append(nuevo_pais)
+    print('')
+    print('Pais agregado correctamente.')
+    print('')
     return
 
 #funcion principal actualizar datos
@@ -201,10 +213,15 @@ def buscar_pais_palabra():
     for fila in DATOS_PAISES:
         if nombre_pais.lower() in fila['nombre'].lower():
             paises_filtrados.append(fila)
-    print(paises_filtrados)
-    pausa=input('Presione enter para continuar: ')
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
+    return paises_filtrados
+
 
 def filtrar_pais():
+    print('')
     print('Filtrar paises por: ')
     print('1) Continente')
     print('2) Rango de población')
@@ -323,7 +340,7 @@ def mostrar_paises_formateados(paises):
     print(f"{'Nombre':<20} | {'Poblacion':>15} | {'Superficie':>18} | {'Continente':<15}")
     print('--'*50)
     for pais in paises:
-        print(f"{pais['nombre']:<20} | {pais['poblacion']:>15,} | {pais['superficie']:>15,} km | {pais['continente']:<15}")
+        print(f"{pais['nombre']:<20} | {pais['poblacion']:>15} | {pais['superficie']:>15} km | {pais['continente']:<15}")
     print('--'*50)
 
 # Funcion para ordenar por nombre
@@ -569,7 +586,7 @@ def menu_principal():
             case '2':
                 actualizar_datos()
             case '3':
-                buscar_pais()
+                buscar_pais_palabra()
             case '4':
                 filtrar_pais()
             case '5':
