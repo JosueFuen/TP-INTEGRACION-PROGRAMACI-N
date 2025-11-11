@@ -229,7 +229,7 @@ def filtrar_pais():
                 continue
 # ------------------------------------------------------------
 # Ordenar paises
-#función principal para ordenar los paises por nombre, poblacion o superficie
+#funcion principal para ordenar los paises por nombre, poblacion o superficie
 def ordenar_paises():
     print('Ordenar paises por: ')
     print('1) Nombre')
@@ -290,7 +290,7 @@ def bubble_sort_paises(paises, campo, ascendente=True):
                 valor_actual = paises_ordenados[j][campo]
                 valor_siguiente = paises_ordenados[j + 1][campo]
 
-            # Comparación según el orden deseado
+            # Comparacion segun el orden deseado
             if ascendente:
                 # Orden ascendente: si el actual es mayor que el siguiente, intercambiar
                 debe_intercambiar = valor_actual > valor_siguiente
@@ -303,13 +303,13 @@ def bubble_sort_paises(paises, campo, ascendente=True):
                 paises_ordenados[j], paises_ordenados[j + 1] = paises_ordenados[j + 1], paises_ordenados[j]
                 intercambio_realizado = True
 
-        # Si no hubo intercambios en esta pasada, la lista ya está ordenada
+        # Si no hubo intercambios en esta pasada, la lista ya esta ordenada
         if not intercambio_realizado:
             break
 
     return paises_ordenados
 
-# Función para mostrar países formateados
+# Funcion para mostrar paises formateados
 def mostrar_paises_formateados(paises):
     """
     Muestra la lista de paises en formato de tabla
@@ -327,7 +327,7 @@ def mostrar_paises_formateados(paises):
         print(f"{pais['nombre']:<20} | {pais['poblacion']:>15,} | {pais['superficie']:>15,} km | {pais['continente']:<15}")
     print('--'*50)
 
-# Función para ordenar por nombre
+# Funcion para ordenar por nombre
 def ordenar_por_nombre():
     if not DATOS_PAISES:
         print("No hay paises para ordenar.")
@@ -347,7 +347,7 @@ def ordenar_por_nombre():
     mostrar_paises_formateados(paises_ordenados)
     input('Presione enter para continuar: ')
 
-# Función para ordenar por población
+# Funcion para ordenar por poblacion
 def ordenar_por_poblacion():
     if not DATOS_PAISES:
         print("No hay paises para ordenar.")
@@ -367,7 +367,7 @@ def ordenar_por_poblacion():
     mostrar_paises_formateados(paises_ordenados)
     input('Presione enter para continuar: ')
 
-# Función para ordenar por superficie
+# Funcion para ordenar por superficie
 def ordenar_por_superficie():
     if not DATOS_PAISES:
         print("No hay paises para ordenar.")
