@@ -232,30 +232,27 @@ def filtrar_pais():
 # ------------------------------------------------------------
 # Ordenar paises
 #funcion principal para ordenar los paises por nombre, poblacion o superficie
+
 def ordenar_paises():
-    print('Ordenar paises por: ')
-    print('1) Nombre')
-    print('2) Poblacion')
-    print('3) Superficie')
-    print('4) Volver atras')
-    option=''
-    while option!='4':
-        option=input('Ingrese la opción deseada:')
+    while True:
+        print('')
+        print('Ordenar paises por: ')
+        print('1) Nombre')
+        print('2) Poblacion')
+        print('3) Superficie')
+        print('4) Volver atras')
+        option=input('Ingrese la opción deseada:').strip()
         match option:
             case '1':
                 ordenar_por_nombre()
-                break
             case '2':
                 ordenar_por_poblacion()
-                break
             case '3':
                 ordenar_por_superficie()
-                break
             case '4':
                 break
             case _:
-                pausa=input('Opción incorrecta. Intente nuevamente.')
-                continue
+                print('Opción incorrecta. Intente nuevamente.')
 
 # Funcion generica de ordenamiento burbuja (Bubble Sort)
 # Recibe la lista de paises, el campo por el cual ordenar, y si es ascendente o descendente
@@ -556,6 +553,8 @@ def tiene_paises():
         input('Presione enter para continuar: ')
         return False
     return True
+
+
 
 # Fin validaciones
 # ------------------------------------------------------------
