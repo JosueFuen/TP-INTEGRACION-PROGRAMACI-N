@@ -490,22 +490,31 @@ def promedio_superficie():
     print('')
     return
 
-# Fin mostrar estadisticas
-# ------------------------------------------------------------
-
-# Validaciones
-# ---------------------------------------------------------
-def tiene_paises():
+# funcion cantidad de paises por continente
+def cantidad_paises_continente():
     """
-    Valida si hay paises para mostrar
+    Muestra la cantidad de paises por continente
     Parametros:
     - DATOS_PAISES: lista de diccionarios con datos de paises
     """
-    if not DATOS_PAISES:
-        print('No hay paises para mostrar.')
-        input('Presione enter para continuar: ')
-        return False
-    return True
+    # validar si hay paises para mostrar
+    if not tiene_paises():
+        return
+    paises_por_continente={}
+
+    for datos_pais in DATOS_PAISES:
+        if datos_pais['continente'] not in paises_por_continente:
+            paises_por_continente[datos_pais['continente']]=1
+        else:
+            paises_por_continente[datos_pais['continente']]+=1
+    print('')
+    print('--'*50)
+    for continente, cantidad in paises_por_continente.items():
+        # continente toma el valor de la clave y cantidad toma el valor de la cantidad de paises
+        print(f'{continente:<10} : {cantidad}')
+    print('--'*50)
+    print('')
+    return
 
 
 def mostrar_estadisticas():
@@ -528,11 +537,28 @@ def mostrar_estadisticas():
             case '3':
                 promedio_superficie()
             case '4':
-                break
+                cantidad_paises_continente()
             case '5':
                 break
             case _:
                 print('Opción incorrecta. Intente nuevamente.')
+
+# validaciones
+# ------------------------------------------------------------
+def tiene_paises():
+    """
+    Valida si hay paises para mostrar
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    if not DATOS_PAISES:
+        print('No hay paises para mostrar.')
+        input('Presione enter para continuar: ')
+        return False
+    return True
+
+# Fin validaciones
+# ------------------------------------------------------------
 
 
 while opcion != '7':
