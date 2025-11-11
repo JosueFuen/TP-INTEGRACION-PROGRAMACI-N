@@ -549,25 +549,41 @@ def tiene_paises():
 # Fin validaciones
 # ------------------------------------------------------------
 
+# menu principal
+def menu_principal():
+    while True:
+        print('')
+        print('MENU PRINCIPAL: ')
+        print('')
+        print('1) Agregar pais')
+        print('2) Actualizar datos')
+        print('3) Buscar pais')
+        print('4) Filtrar paises')
+        print('5) Ordenar paises')
+        print('6) Mostrar estadisticas')
+        print('7) Salir')
+        opcion=input('Seleccione una opcion: ').strip()
+        match opcion:
+            case '1':
+                agregar_pais()
+            case '2':
+                actualizar_datos()
+            case '3':
+                buscar_pais()
+            case '4':
+                filtrar_pais()
+            case '5':
+                ordenar_paises()
+            case '6':
+                mostrar_estadisticas()
+            case '7':
+                print('Hasta luego!')
+                break
+            case _:
+                print('Opción incorrecta. Intente nuevamente.')
 
-while opcion != '7':
-    menu()
-    opcion=input('Seleccione una opcion: ').strip()
-    match opcion:
-        case '1':
-            agregar_pais()
-        case '2':
-            actualizar_datos()
-        case '3':
-            buscar_pais()
-        case '4':
-            filtrar_pais()
-        case '5':
-            ordenar_paises()
-        case '6':
-            mostrar_estadisticas()
-        case '7':
-            print('Hasta luego!')
-            break
-        case _:
-            pausa=input('Opción incorrecta. Intente nuevamente.')
+# fin menu principal
+# ------------------------------------------------------------
+
+# menu principal
+menu_principal()
