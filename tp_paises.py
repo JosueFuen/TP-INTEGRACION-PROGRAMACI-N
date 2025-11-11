@@ -156,6 +156,23 @@ def filtro_rangos(tipo):
     return paises_filtrados
 
 
+def mayor_menor_poblacion():
+    mayor_poblacion=
+    menor_poblacion=
+    valor_menor=0
+    valor_mayor=
+    for datos_pais in DATOS_PAISES:
+        if datos_pais['poblacion'] > valor_menor:
+            valor_menor=datos_pais['poblacion']
+            mayor_poblacion.append(datos_pais)
+        elif datos_pais['poblacion'] <valor_mayor:
+            valor_mayor=datos_pais['poblacion']
+            menor_poblacion.append(datos_pais)
+    print ('País con mayor poblacion: ')
+    print (mayor_poblacion)
+    print ('='*60)
+    print ('Pais con menor poblacion: ')
+    print (menor_poblacion)
 
 #función principal para agregar un nuevo país.
 def agregar_pais():
@@ -189,7 +206,7 @@ def actualizar_datos():
         escritor.writeheader()
         escritor.writerows(DATOS_PAISES)
 #Busca el pais por palabra ingresada 
-def buscar_pais():
+def buscar_pais_palabra():
     nombre_pais=input('Ingresar nombre de pais: ').strip()
     while True:
         if nombre_pais=='':
@@ -227,6 +244,7 @@ def filtrar_pais():
             case _:
                 pausa=input('Opción incorrecta. Intente nuevamente.')
                 continue
+
 # ------------------------------------------------------------
 # Ordenar paises
 #funcion principal para ordenar los paises por nombre, poblacion o superficie
@@ -390,7 +408,31 @@ def ordenar_por_superficie():
 # Fin ordenar paises
 # ------------------------------------------------------------
 
-
+def mostrar_estadisticas():
+    print('ESTADÍSTICAS: ')
+    print('1) País con mayor y menor población')
+    print('2) Promedio de población')
+    print('3) Promedio de superficie')
+    print('4) Cantidad de paises por continente')
+    print('5) Salir')    
+    option=''
+    while option!='5':
+        option=input('Ingrese la opción deseada:')
+        match option:
+            case '1':
+                mayor_menor_poblacion()
+                break
+            case '2':
+                break
+            case '3':
+                break
+            case '4':
+                break
+            case '5':
+                break
+            case _:
+                pausa=input('Opción incorrecta. Intente nuevamente.')
+                continue
 
 while opcion != '7':
     menu()
@@ -407,7 +449,7 @@ while opcion != '7':
         case '5':
             ordenar_paises()
         case '6':
-            continue
+            mostrar_estadisticas()
         case '7':
             print('Hasta luego!')
             break
