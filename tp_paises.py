@@ -117,6 +117,9 @@ def buscar_pais():
             nombre_pais=input('Debe ingresar un nombre. Intente nuevamente: ')
             continue
         break
+    print('')
+    print(f'Pais encontrado correctamente: {nombre_pais}')
+    print('')
     return nombre_pais
 
 #filtra los paises por continente seleccionado
@@ -170,6 +173,9 @@ def agregar_pais():
         escritor=csv.DictWriter(archivo,fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writerow(nuevo_pais)
     DATOS_PAISES.append(nuevo_pais)
+    print('')
+    print('Pais agregado correctamente.')
+    print('')
     return
 
 #funcion principal actualizar datos
