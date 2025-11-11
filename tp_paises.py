@@ -328,9 +328,7 @@ def mostrar_paises_formateados(paises):
 
 # Funcion para ordenar por nombre
 def ordenar_por_nombre():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Ordenar paises por nombre:')
@@ -348,9 +346,7 @@ def ordenar_por_nombre():
 
 # Funcion para ordenar por poblacion
 def ordenar_por_poblacion():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Ordenar paises por poblacion:')
@@ -368,9 +364,7 @@ def ordenar_por_poblacion():
 
 # Funcion para ordenar por superficie
 def ordenar_por_superficie():
-    if not DATOS_PAISES:
-        print("No hay paises para ordenar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     print('Orden:')
@@ -399,9 +393,7 @@ def mayor_menor_poblacion():
     - DATOS_PAISES: lista de diccionarios con datos de paises
     """
     # validar si hay paises para mostrar
-    if not DATOS_PAISES:
-        print("No hay paises para mostrar.")
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     # inicializar variables
@@ -553,8 +545,6 @@ def tiene_paises():
         input('Presione enter para continuar: ')
         return False
     return True
-
-
 
 # Fin validaciones
 # ------------------------------------------------------------
