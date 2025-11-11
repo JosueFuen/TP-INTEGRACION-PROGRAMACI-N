@@ -1,16 +1,16 @@
 import csv
 import os
-nombre_archivo='Country-data.csv'
+NOMBRE_ARCHIVO='country_data.csv'
 opcion=''
 #Argentina,45376763,2780400,América
-if not os.path.exists('Country-data.csv'):
-    with open (nombre_archivo, 'w', newline='', encoding='utf-8') as archivo:
+if not os.path.exists(NOMBRE_ARCHIVO):
+    with open (NOMBRE_ARCHIVO, 'w', newline='', encoding='utf-8') as archivo:
         escritor=csv.DictWriter(archivo, fieldnames=['nombre','poblacion','superficie','continente'])
         escritor.writeheader()
 #Crea una lista de diccionarios con la informacion de los paises
 def catalogo_paises():
     paises=[]
-    with open (nombre_archivo, newline='', encoding='utf-8' ) as archivo:
+    with open (NOMBRE_ARCHIVO, newline='', encoding='utf-8' ) as archivo:
         lector=csv.DictReader(archivo)
         for fila in lector:
             paises.append({'nombre':fila['nombre'], 'poblacion':int(fila['poblacion']),'superficie':int (fila['superficie']),'continente':fila['continente']})
