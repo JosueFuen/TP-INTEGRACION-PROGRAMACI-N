@@ -156,23 +156,7 @@ def filtro_rangos(tipo):
     return paises_filtrados
 
 
-def mayor_menor_poblacion():
-    mayor_poblacion=
-    menor_poblacion=
-    valor_menor=0
-    valor_mayor=
-    for datos_pais in DATOS_PAISES:
-        if datos_pais['poblacion'] > valor_menor:
-            valor_menor=datos_pais['poblacion']
-            mayor_poblacion.append(datos_pais)
-        elif datos_pais['poblacion'] <valor_mayor:
-            valor_mayor=datos_pais['poblacion']
-            menor_poblacion.append(datos_pais)
-    print ('País con mayor poblacion: ')
-    print (mayor_poblacion)
-    print ('='*60)
-    print ('Pais con menor poblacion: ')
-    print (menor_poblacion)
+
 
 #función principal para agregar un nuevo país.
 def agregar_pais():
@@ -408,31 +392,174 @@ def ordenar_por_superficie():
 # Fin ordenar paises
 # ------------------------------------------------------------
 
+# ------------------------------------------------------------
+# Mostrar estadisticas
+#funcion principal para mostrar el pais con mayor y menor poblacion
+def mayor_menor_poblacion():
+    """
+    Muestra el pais con mayor y menor poblacion
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not DATOS_PAISES:
+        print("No hay paises para mostrar.")
+        input('Presione enter para continuar: ')
+        return
+
+    # inicializar variables
+    mayor_poblacion= DATOS_PAISES[0]
+    menor_poblacion= DATOS_PAISES[0]
+
+    # recorrer la lista de paises para encontrar el pais con mayor y menor poblacion
+    for datos_pais in DATOS_PAISES:
+        # si encontramos un pais con mayor poblacion, actualizamos la variable
+        if datos_pais['poblacion'] > mayor_poblacion['poblacion']:
+            mayor_poblacion=datos_pais
+
+        # si encontramos un pais con menor poblacion, actualizamos la variable
+        if datos_pais['poblacion'] < menor_poblacion['poblacion']:
+            menor_poblacion=datos_pais
+
+    # mostrar los paises con mayor y menor poblacion
+    print('')
+    print ('--'*50)
+    print ('Paises con mayor y menor poblacion: ')
+    print ('--'*50)
+    print ('Pais con mayor poblacion:')
+    print (f'Nombre: {mayor_poblacion['nombre']}')
+    print (f'Poblacion: {mayor_poblacion['poblacion']}')
+    print (f'Superficie: {mayor_poblacion['superficie']} km')
+    print (f'Continente: {mayor_poblacion['continente']}')
+    print ('--'*50)
+    print ('Pais con menor poblacion:')
+    print (f'Nombre: {menor_poblacion['nombre']}')
+    print (f'Poblacion: {menor_poblacion['poblacion']}')
+    print (f'Superficie: {menor_poblacion['superficie']} km')
+    print (f'Continente: {menor_poblacion['continente']}')
+    print ('--'*50)
+    print('')
+    input('Presione enter para continuar: ')
+    return
+
+# funcion promedio de poblacion
+def promedio_poblacion():
+    """
+    Muestra el promedio de poblacion de los paises
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not tiene_paises():
+        return
+
+    # inicializar variable
+    suma_poblacion=0
+    # calcular el promedio de poblacion
+    for datos_pais in DATOS_PAISES:
+        suma_poblacion+=datos_pais['poblacion']
+    promedio_poblacion=suma_poblacion / len(DATOS_PAISES)
+    print('')
+    print('--'*50)
+    print(f'Promedio de poblacion: {promedio_poblacion:.2f}')
+    print('--'*50)
+    print('')
+    return
+
+# funcion promedio de superficie
+def promedio_superficie():
+    """
+    Muestra el promedio de superficie de los paises
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not tiene_paises():
+        return
+
+    # inicializar variable
+    suma_superficie=0
+    # calcular el promedio de superficie
+    for datos_pais in DATOS_PAISES:
+        suma_superficie+=datos_pais['superficie']
+    promedio_superficie=suma_superficie / len(DATOS_PAISES)
+    print('')
+    print('--'*50)
+    print(f'Promedio de superficie: {promedio_superficie:.2f}')
+    print('--'*50)
+    print('')
+    return
+
+# funcion cantidad de paises por continente
+def cantidad_paises_continente():
+    """
+    Muestra la cantidad de paises por continente
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not tiene_paises():
+        return
+    paises_por_continente={}
+
+    for datos_pais in DATOS_PAISES:
+        if datos_pais['continente'] not in paises_por_continente:
+            paises_por_continente[datos_pais['continente']]=1
+        else:
+            paises_por_continente[datos_pais['continente']]+=1
+    print('')
+    print('--'*50)
+    for continente, cantidad in paises_por_continente.items():
+        # continente toma el valor de la clave y cantidad toma el valor de la cantidad de paises
+        print(f'{continente:<10} : {cantidad}')
+    print('--'*50)
+    print('')
+    return
+
+
 def mostrar_estadisticas():
-    print('ESTADÍSTICAS: ')
-    print('1) País con mayor y menor población')
-    print('2) Promedio de población')
-    print('3) Promedio de superficie')
-    print('4) Cantidad de paises por continente')
-    print('5) Salir')    
-    option=''
-    while option!='5':
+    while True:
+        print('')
+        print('ESTADÍSTICAS: ')
+        print('')
+        print('1) País con mayor y menor población')
+        print('2) Promedio de población')
+        print('3) Promedio de superficie')
+        print('4) Cantidad de paises por continente')
+        print('5) Volver atras')
+        option=''
         option=input('Ingrese la opción deseada:')
         match option:
             case '1':
                 mayor_menor_poblacion()
-                break
             case '2':
-                break
+                promedio_poblacion()
             case '3':
-                break
+                promedio_superficie()
             case '4':
-                break
+                cantidad_paises_continente()
             case '5':
                 break
             case _:
-                pausa=input('Opción incorrecta. Intente nuevamente.')
-                continue
+                print('Opción incorrecta. Intente nuevamente.')
+
+# validaciones
+# ------------------------------------------------------------
+def tiene_paises():
+    """
+    Valida si hay paises para mostrar
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    if not DATOS_PAISES:
+        print('No hay paises para mostrar.')
+        input('Presione enter para continuar: ')
+        return False
+    return True
+
+# Fin validaciones
+# ------------------------------------------------------------
+
 
 while opcion != '7':
     menu()
