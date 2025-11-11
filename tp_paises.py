@@ -75,7 +75,9 @@ def validacion_digitos(tipo):
         return cantidad
 #Te hace elegir entre las opciones de continente, para que no haya ningun error
 def validacion_continente():
+    print('')
     print('-----CONTINENTE PARA ELEGIR-----')
+    print('')
     print('1) África')
     print('2) América')
     print('3) Asia')
@@ -129,7 +131,10 @@ def filtro_continente():
     for datos_pais in DATOS_PAISES:
         if nombre_continente==datos_pais['continente']:
             paises_filtrados.append(datos_pais)
-    print(paises_filtrados)
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
     return paises_filtrados
 
 #Es una validación de que el numero ingresado es un digito. Es casi la misma funcion que la validacion_digito, 
@@ -155,10 +160,11 @@ def filtro_rangos(tipo):
     for datos_pais in DATOS_PAISES:
         if datos_pais[tipo]<=rango_superior and datos_pais[tipo]>=rango_inferior:
             paises_filtrados.append(datos_pais)
-    print (paises_filtrados)
+
+    print('')
+    mostrar_paises_formateados(paises_filtrados)
+    print('')
     return paises_filtrados
-
-
 
 
 #función principal para agregar un nuevo país.
@@ -211,6 +217,7 @@ def buscar_pais_palabra():
     pausa=input('Presione enter para continuar: ')
 
 def filtrar_pais():
+    print('')
     print('Filtrar paises por: ')
     print('1) Continente')
     print('2) Rango de población')
@@ -329,7 +336,7 @@ def mostrar_paises_formateados(paises):
     print(f"{'Nombre':<20} | {'Poblacion':>15} | {'Superficie':>18} | {'Continente':<15}")
     print('--'*50)
     for pais in paises:
-        print(f"{pais['nombre']:<20} | {pais['poblacion']:>15,} | {pais['superficie']:>15,} km | {pais['continente']:<15}")
+        print(f"{pais['nombre']:<20} | {pais['poblacion']:>15} | {pais['superficie']:>15} km | {pais['continente']:<15}")
     print('--'*50)
 
 # Funcion para ordenar por nombre
