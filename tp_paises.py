@@ -450,9 +450,7 @@ def promedio_poblacion():
     - DATOS_PAISES: lista de diccionarios con datos de paises
     """
     # validar si hay paises para mostrar
-    if not DATOS_PAISES:
-        print('No hay paises para mostrar.')
-        input('Presione enter para continuar: ')
+    if not tiene_paises():
         return
 
     # inicializar variable
@@ -461,22 +459,66 @@ def promedio_poblacion():
     for datos_pais in DATOS_PAISES:
         suma_poblacion+=datos_pais['poblacion']
     promedio_poblacion=suma_poblacion / len(DATOS_PAISES)
+    print('')
+    print('--'*50)
     print(f'Promedio de poblacion: {promedio_poblacion:.2f}')
-    input('Presione enter para continuar: ')
+    print('--'*50)
+    print('')
+    return
+
+# funcion promedio de superficie
+def promedio_superficie():
+    """
+    Muestra el promedio de superficie de los paises
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not tiene_paises():
+        return
+
+    # inicializar variable
+    suma_superficie=0
+    # calcular el promedio de superficie
+    for datos_pais in DATOS_PAISES:
+        suma_superficie+=datos_pais['superficie']
+    promedio_superficie=suma_superficie / len(DATOS_PAISES)
+    print('')
+    print('--'*50)
+    print(f'Promedio de superficie: {promedio_superficie:.2f}')
+    print('--'*50)
+    print('')
     return
 
 # Fin mostrar estadisticas
 # ------------------------------------------------------------
 
+# Validaciones
+# ---------------------------------------------------------
+def tiene_paises():
+    """
+    Valida si hay paises para mostrar
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    if not DATOS_PAISES:
+        print('No hay paises para mostrar.')
+        input('Presione enter para continuar: ')
+        return False
+    return True
+
+
 def mostrar_estadisticas():
-    print('ESTADÍSTICAS: ')
-    print('1) País con mayor y menor población')
-    print('2) Promedio de población')
-    print('3) Promedio de superficie')
-    print('4) Cantidad de paises por continente')
-    print('5) Volver atras')
-    option=''
-    while option!='5':
+    while True:
+        print('')
+        print('ESTADÍSTICAS: ')
+        print('')
+        print('1) País con mayor y menor población')
+        print('2) Promedio de población')
+        print('3) Promedio de superficie')
+        print('4) Cantidad de paises por continente')
+        print('5) Volver atras')
+        option=''
         option=input('Ingrese la opción deseada:')
         match option:
             case '1':
@@ -484,14 +526,14 @@ def mostrar_estadisticas():
             case '2':
                 promedio_poblacion()
             case '3':
-                break
+                promedio_superficie()
             case '4':
                 break
             case '5':
-                return
+                break
             case _:
-                pausa=input('Opción incorrecta. Intente nuevamente.')
-                continue
+                print('Opción incorrecta. Intente nuevamente.')
+
 
 while opcion != '7':
     menu()
