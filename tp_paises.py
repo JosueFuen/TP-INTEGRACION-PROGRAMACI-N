@@ -442,6 +442,29 @@ def mayor_menor_poblacion():
     input('Presione enter para continuar: ')
     return
 
+# funcion promedio de poblacion
+def promedio_poblacion():
+    """
+    Muestra el promedio de poblacion de los paises
+    Parametros:
+    - DATOS_PAISES: lista de diccionarios con datos de paises
+    """
+    # validar si hay paises para mostrar
+    if not DATOS_PAISES:
+        print('No hay paises para mostrar.')
+        input('Presione enter para continuar: ')
+        return
+
+    # inicializar variable
+    suma_poblacion=0
+    # calcular el promedio de poblacion
+    for datos_pais in DATOS_PAISES:
+        suma_poblacion+=datos_pais['poblacion']
+    promedio_poblacion=suma_poblacion / len(DATOS_PAISES)
+    print(f'Promedio de poblacion: {promedio_poblacion:.2f}')
+    input('Presione enter para continuar: ')
+    return
+
 # Fin mostrar estadisticas
 # ------------------------------------------------------------
 
@@ -451,22 +474,21 @@ def mostrar_estadisticas():
     print('2) Promedio de población')
     print('3) Promedio de superficie')
     print('4) Cantidad de paises por continente')
-    print('5) Salir')
+    print('5) Volver atras')
     option=''
     while option!='5':
         option=input('Ingrese la opción deseada:')
         match option:
             case '1':
                 mayor_menor_poblacion()
-                break
             case '2':
-                break
+                promedio_poblacion()
             case '3':
                 break
             case '4':
                 break
             case '5':
-                break
+                return
             case _:
                 pausa=input('Opción incorrecta. Intente nuevamente.')
                 continue
